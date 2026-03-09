@@ -24,7 +24,6 @@ export default function PageReveal({ onDone }: { onDone: () => void }) {
         if (!mounted) return;
 
         const proxy = { val: 0 };
-        let nameTween: gsap.core.Tween | null = null;
 
         const counterTween = gsap.to(proxy, {
             val: 100,
@@ -70,7 +69,6 @@ export default function PageReveal({ onDone }: { onDone: () => void }) {
 
         return () => {
             counterTween.kill();
-            nameTween?.kill();
         };
     }, [mounted]);
 
@@ -81,7 +79,7 @@ export default function PageReveal({ onDone }: { onDone: () => void }) {
     return (
         <>
             {/* ── 5 strips (bg layer, z-[9998]) ── */}
-            <div className="fixed inset-0 z-[9998] pointer-events-none">
+            <div className="fixed inset-0 z-9998 pointer-events-none">
                 {STRIPS.map((strip, i) => (
                     <div
                         key={strip.id}
@@ -98,7 +96,7 @@ export default function PageReveal({ onDone }: { onDone: () => void }) {
             {/* ── Counter overlay (z-[9999]) ── */}
             <div
                 ref={overlayRef}
-                className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none select-none"
+                className="fixed inset-0 z-9999 flex flex-col items-center justify-center pointer-events-none select-none"
             >
                 {/* LOADING label */}
                 <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em] mb-6">
