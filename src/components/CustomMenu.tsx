@@ -407,7 +407,12 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-socials-link { font-size: 1.2rem; font-weight: 500; color: var(--foreground); text-decoration: none; display: inline-block; padding: 2px 0; transition: color 0.3s ease; }
 .sm-socials-link:hover { color: var(--sm-accent, #ff0000); }
 
-@media (max-width: 640px) { .sm-scope { width: 100%; } }
+@media (max-width: 640px) { 
+  .sm-scope { width: 100%; } 
+  .sm-panel-item { font-size: 3.25rem; letter-spacing: -1px; padding-right: 1.2em; }
+  .sm-panel-list[data-numbering] .sm-panel-item::after { font-size: 14px; right: 2.4em; }
+  .staggered-menu-panel { padding: 5em 1.5em 1.5em 1.5em; }
+}
       `}</style>
         </>
     );
