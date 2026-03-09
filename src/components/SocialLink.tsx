@@ -6,6 +6,7 @@ const SocialLink = ({ url, icon: Icon, label }: { url: string; icon: LucideIcon;
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={label}
             className="flex flex-col items-center gap-2 group"
         >
             <div className="p-3 bg-neo-blue text-white border-2 border-neo-border-color neo-shadow-sm rounded-lg group-hover:-translate-y-1 group-hover:scale-110 group-hover:neo-shadow-md group-hover:bg-neo-babyb transition-all duration-300">

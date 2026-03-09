@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import CustomButton from '../components/CustomButton';
 import { Linkedin, Github, ArrowUpRight, Facebook } from 'lucide-react';
-import { useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
@@ -44,33 +43,74 @@ const marqueeText = [
     '● LET\'S BUILD SOMETHING GREAT',
 ].join('   ');
 
-import Cal, { getCalApi } from "@calcom/embed-react";
+import { useState, useRef, useEffect } from 'react';
 
 const CAL_LINK = 'mahmoodiftee/30min';
 
+// Dynamically import Cal.com only when needed
+const loadCal = () => import("@calcom/embed-react");
+
 function CalEmbed({ theme }: { theme: string }) {
     const brandColor = theme === 'dark' ? '#fccf2a' : '#18181b';
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [CalComponent, setCalComponent] = useState<any>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                // Initialize loading of library
+                loadCal().then((mod) => {
+                    setCalComponent(() => mod.default);
+                    setIsLoaded(true);
+                });
+                observer.disconnect();
+            }
+        }, { rootMargin: '200px' });
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        if (!isLoaded) return;
         (async function () {
-            const cal = await getCalApi();
-            // This tells the ALREADY LOADED iframe to update its UI dynamically
-            cal("ui", {
-                theme: theme as any,
-                styles: { branding: { brandColor } },
-                hideEventTypeDetails: true,
-                layout: "month_view"
-            });
+            try {
+                const { getCalApi } = await loadCal();
+                const cal = await getCalApi();
+                if (!cal) return;
+
+                cal("ui", {
+                    theme: theme as any,
+                    cssVarsPerTheme: {
+                        light: { "cal-brand": brandColor },
+                        dark: { "cal-brand": brandColor },
+                    },
+                    hideEventTypeDetails: true,
+                    layout: "month_view"
+                });
+            } catch (e) {
+                // Silently handle Cal.com initialization noise
+            }
         })();
-    }, [theme, brandColor]);
+    }, [theme, brandColor, isLoaded]);
 
     return (
-        <div className="w-full min-h-[400px] overflow-auto">
-            <Cal
-                calLink={CAL_LINK}
-                style={{ width: "100%", height: "100%", overflow: "scroll" }}
-                config={{ overlayCalendar: true, layout: "month_view" } as any}
-            />
+        <div ref={containerRef} className="w-full min-h-[400px] overflow-auto" aria-label="Meeting Scheduler">
+            {isLoaded && CalComponent ? (
+                <CalComponent
+                    calLink={CAL_LINK}
+                    style={{ width: "100%", height: "100%", overflow: "scroll" }}
+                    config={{ overlayCalendar: true, layout: "month_view" } as any}
+                />
+            ) : (
+                <div className="w-full h-full flex items-center justify-center text-(--foreground) opacity-40 font-bold uppercase tracking-widest text-xs animate-pulse">
+                    Loading Scheduler...
+                </div>
+            )}
         </div>
     );
 }
@@ -129,6 +169,7 @@ const Contact = () => {
                                 loop
                                 autoplay
                                 className="w-full h-auto max-w-[300px] md:max-w-full scale-125 md:scale-100"
+                                aria-label="Animated illustration of a person thinking or working on an idea"
                             />
                         </div>
                     </motion.div>
@@ -176,6 +217,7 @@ const Contact = () => {
                                     href={href}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    aria-label={label}
                                     className="flex flex-col items-center gap-2 group"
                                 >
                                     <div className="p-3 bg-(--background) border-4 border-(--neo-border-color) group-hover:-translate-y-1 group-hover:bg-neo-yellow transition-all duration-300">
@@ -207,6 +249,7 @@ const Contact = () => {
                                 loop
                                 autoplay
                                 className="w-full h-auto scale-150"
+                                aria-label="Decorative animated illustration"
                             />
                         </div>
                     </motion.div>

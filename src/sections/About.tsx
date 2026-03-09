@@ -65,7 +65,7 @@ const CurrentlyBlock = ({ dark = false }: { dark?: boolean }) => (
 const Photo = ({ className = '' }: { className?: string }) => (
     <img
         src={MahmoodImg}
-        alt="Mahmood"
+        alt="Mahmood Iffty - Software Engineer Professional Portrait"
         className={`w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 ${className}`}
     />
 );

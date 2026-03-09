@@ -124,15 +124,23 @@ const ProjectCard = ({ project, className = '' }: { project: typeof projects[0],
 
                 <div className="flex flex-wrap gap-4 mt-2">
                     {project.liveLink && (
-                        <Link target="_blank" to={project?.liveLink}>
-                            <CustomButton variant="auto" size="sm" className="flex items-center gap-2 group/btn px-2 md:px-4">
+                        <Link
+                            target="_blank"
+                            to={project.liveLink}
+                            aria-label={`View live demo of ${project.name}`}
+                        >
+                            <CustomButton as="span" variant="auto" size="sm" className="flex items-center gap-2 group/btn px-2 md:px-4">
                                 LIVE <ExternalLink size={16} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                             </CustomButton>
                         </Link>
                     )}
                     {project.githubLink && (
-                        <Link target="_blank" to={project?.githubLink}>
-                            <CustomButton variant="auto" size="sm" className="flex items-center gap-2 group/btn px-2 md:px-4">
+                        <Link
+                            target="_blank"
+                            to={project.githubLink}
+                            aria-label={`View source code of ${project.name} on GitHub`}
+                        >
+                            <CustomButton as="span" variant="auto" size="sm" className="flex items-center gap-2 group/btn px-2 md:px-4">
                                 GITHUB <Github size={16} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                             </CustomButton>
                         </Link>

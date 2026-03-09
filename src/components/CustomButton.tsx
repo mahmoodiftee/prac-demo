@@ -5,6 +5,7 @@ interface NeoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'auto' | 'default' | 'dark';
     size?: 'sm' | 'md' | 'lg';
     className?: string;
+    as?: React.ElementType;
 }
 
 export const CustomButton: React.FC<NeoButtonProps> = ({
@@ -12,17 +13,15 @@ export const CustomButton: React.FC<NeoButtonProps> = ({
     variant = 'auto',
     size = 'md',
     className = '',
+    as: Component = 'button',
     ...props
 }) => {
     const base =
         'inline-flex items-center justify-center border-4 font-bold uppercase tracking-wide transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none cursor-pointer';
 
     const variants = {
-        // Respects dark mode automatically
         auto: 'bg-(--background) text-(--foreground) border-(--neo-border-color) neo-shadow',
-        // Always light
         default: 'bg-white text-black border-black shadow-[4px_4px_0px_0px_var(--color-black)]',
-        // Always dark
         dark: 'bg-black text-white border-white shadow-[4px_4px_0px_0px_var(--color-white)]',
     };
 
@@ -33,12 +32,12 @@ export const CustomButton: React.FC<NeoButtonProps> = ({
     };
 
     return (
-        <button
+        <Component
             className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
-            {...props}
+            {...(Component === 'button' ? props : {})}
         >
             {children}
-        </button>
+        </Component>
     );
 };
 

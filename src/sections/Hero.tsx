@@ -84,6 +84,7 @@ const Hero = () => {
                                         loop
                                         autoplay
                                         className={theme === "dark" ? "invert pointer-events-none" : "pointer-events-none"}
+                                        aria-label="Decorative animated wink"
                                     />
                                 </motion.span>
                             </span>
@@ -105,6 +106,7 @@ const Hero = () => {
                                     loop
                                     autoplay
                                     className={theme === "dark" ? "invert pointer-events-none" : "pointer-events-none"}
+                                    aria-label="Decorative animated arrow"
                                 />
                             </motion.span>
                             <CustomButton
@@ -127,9 +129,17 @@ const Hero = () => {
                             <span className="text-sm font-bold uppercase tracking-widest mb-4 md:mb-6 lg:mb-8 block opacity-60">Navigation</span>
                             <nav className="flex flex-col gap-3 md:gap-4 lg:gap-6">
                                 {['Projects', 'About', 'Contact'].map((item) => (
-                                    <a key={item} href={`#${item.toLowerCase()}`} onClick={(e) => handleScrollTo(e, `#${item.toLowerCase()}`)} className="text-2xl lg:text-4xl xl:text-3xl 2xl:text-4xl font-black uppercase flex items-center justify-between hover:text-neo-yellow transition-colors group">
+                                    <a key={item} href={`#${item.toLowerCase()}`} onClick={(e) => handleScrollTo(e, `#${item.toLowerCase()}`)} className="relative text-2xl lg:text-4xl xl:text-3xl 2xl:text-4xl font-black uppercase flex items-center gap-2 hover:text-neo-yellow transition-colors group w-fit">
                                         <span className="truncate">{item}</span>
-                                        <span className="text-xl lg:text-3xl transform shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ml-2">→</span>
+                                        <span className="absolute -right-22 -top-3 w-12 md:w-25 h-16 transform opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shrink-0 flex items-center justify-center">
+                                            <DotLottieReact
+                                                data={arrow}
+                                                loop
+                                                autoplay
+                                                className={theme === "dark" ? "invert pointer-events-none w-full h-full" : "pointer-events-none w-full h-full"}
+                                                aria-label="Decorative animated arrow"
+                                            />
+                                        </span>
                                     </a>
                                 ))}
                             </nav>
@@ -143,7 +153,7 @@ const Hero = () => {
                             </div>
 
                             <div className="w-32 h-36 lg:w-40 lg:h-48 rounded-full overflow-hidden border-4 border-black">
-                                <img src={MahmoodImg} alt="Mahmood" className="w-full h-full object-cover scale-140 translate-y-6 translate-x-1 md:translate-y-6.5 md:translate-x-2" />
+                                <img src={MahmoodImg} alt="Mahmood Iffty - Full Stack Developer Profile Picture" className="w-full h-full object-cover scale-140 translate-y-6 translate-x-1 md:translate-y-6.5 md:translate-x-2" />
                             </div>
 
                             <div className="text-right w-full hidden md:block">
@@ -157,7 +167,7 @@ const Hero = () => {
                     {/* Bottom Right Split: Inquiry & Socials */}
                     <div className="flex flex-col sm:flex-row h-auto xl:h-auto min-h-[200px]">
                         {/* Inquiry Cell */}
-                        <div className="flex-1 p-4 sm:p-8 border-b-4 sm:border-b-0 sm:border-r-4 border-(--neo-border-color) flex flex-col justify-center bg-neo-blue relative group">
+                        <div className="flex-1 p-4 md:p-6 border-b-4 sm:border-b-0 sm:border-r-4 border-(--neo-border-color) flex flex-col justify-center bg-neo-blue relative group">
                             <div className="relative z-10">
                                 <div className="flex flex-col gap-4">
                                     <span className="text-lg font-black uppercase text-white opacity-70">Status</span>
@@ -191,7 +201,7 @@ const Hero = () => {
                         </div>
 
                         {/* Social Cell */}
-                        <div className="flex-1 flex flex-row justify-between items-center bg-(--background) p-2">
+                        <div className="flex-1 flex flex-row justify-between items-center bg-(--background) p-4 md:p-6">
                             <div className='text-3xl lg:text-4xl xl:text-3xl 2xl:text-4xl font-black uppercase [writing-mode:vertical-rl] rotate-180'>
                                 Social
                             </div>
